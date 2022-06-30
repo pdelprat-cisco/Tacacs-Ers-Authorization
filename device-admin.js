@@ -188,11 +188,83 @@ function pushAuthorization(id, site, role) {
   });
 }
 
+
+
+function getAuthorizationProfiles() {
+  return new Promise((resolve, reject) => {
+    fetch('https://ise.acme.com/api/v1/policy/network-access/authorization-profiles', {
+      method: 'GET',
+      headers: {
+        Authorization:
+          'Basic ' + Buffer.from(`${user}:${password}`).toString('base64'),
+        Accept: 'application/json',
+      },
+      agent: httpsAgent,
+    })
+      .catch((err) => {
+        reject(err);
+      })
+      .then(async (response) => {
+        let body = await response.text();
+        body ? (body = JSON.parse(body)) : null;
+        resolve(body);
+      });
+  });
+}
+
+function getShellProfiles() {
+  return new Promise((resolve, reject) => {
+    fetch('https://ise.acme.com/api/v1/policy/device-admin/shell-profiles', {
+      method: 'GET',
+      headers: {
+        Authorization:
+          'Basic ' + Buffer.from(`${user}:${password}`).toString('base64'),
+        Accept: 'application/json',
+      },
+      agent: httpsAgent,
+    })
+      .catch((err) => {
+        reject(err);
+      })
+      .then(async (response) => {
+        let body = await response.text();
+        body ? (body = JSON.parse(body)) : null;
+        resolve(body);
+      });
+  });
+}
+
+
+function getCommandSets() {
+  return new Promise((resolve, reject) => {
+    fetch('https://ise.acme.com/api/v1/policy/device-admin/command-sets', {
+      method: 'GET',
+      headers: {
+        Authorization:
+          'Basic ' + Buffer.from(`${user}:${password}`).toString('base64'),
+        Accept: 'application/json',
+      },
+      agent: httpsAgent,
+    })
+      .catch((err) => {
+        reject(err);
+      })
+      .then(async (response) => {
+        let body = await response.text();
+        body ? (body = JSON.parse(body)) : null;
+        resolve(body);
+      });
+  });
+}
+
 module.exports = {
   getLocation,
   getPolicySet,
   getAuthorizations,
   deleteAuthorization,
   pushAuthorization,
+  getAuthorizationProfiles,
+  getShellProfiles,
+  getCommandSets,
 };
 
