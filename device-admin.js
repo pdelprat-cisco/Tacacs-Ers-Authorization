@@ -6,13 +6,14 @@ const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
 });
 
-const user = config.get('user');
-const password = config.get('password');
+const user = config.get('ise.user');
+const password = config.get('ise.password');
+const fqdn = config.get('ise.fqdn')
 
 function getLocation() {
   return new Promise((resolve, reject) => {
     fetch(
-      'https://ise.acme.com/api/v1/policy/network-access/dictionaries/DEVICE/attribute/Location',
+      `https://${fqdn}/api/v1/policy/network-access/dictionaries/DEVICE/attribute/Location`,
       {
         method: 'GET',
         headers: {
@@ -37,7 +38,7 @@ function getLocation() {
 function getAuthorizations(policyId) {
   return new Promise((resolve, reject) => {
     fetch(
-      `https://ise.acme.com/api/v1/policy/device-admin/policy-set/${policyId}/authorization`,
+      `https://${fqdn}/api/v1/policy/device-admin/policy-set/${policyId}/authorization`,
       {
         method: 'GET',
         headers: {
@@ -61,7 +62,7 @@ function getAuthorizations(policyId) {
 
 function getPolicySet() {
   return new Promise((resolve, reject) => {
-    fetch('https://ise.acme.com/api/v1/policy/device-admin/policy-set', {
+    fetch(`https://${fqdn}/api/v1/policy/device-admin/policy-set`, {
       method: 'GET',
       headers: {
         Authorization:
@@ -84,7 +85,7 @@ function getPolicySet() {
 function deleteAuthorization(policyId, ruleId) {
   return new Promise((resolve, reject) => {
     fetch(
-      `https://ise.acme.com/api/v1/policy/device-admin/policy-set/${policyId}/authorization/${ruleId}`,
+      `https://${fqdn}/api/v1/policy/device-admin/policy-set/${policyId}/authorization/${ruleId}`,
       {
         method: 'DELETE',
         headers: {
@@ -157,7 +158,7 @@ function pushAuthorization(id, site, role) {
     };
     console.dir(body, { depth: null });
     fetch(
-      `https://ise.acme.com/api/v1/policy/device-admin/policy-set/${id}/authorization`,
+      `https://${fqdn}/api/v1/policy/device-admin/policy-set/${id}/authorization`,
       {
         method: 'POST',
         headers: {
@@ -192,7 +193,7 @@ function pushAuthorization(id, site, role) {
 
 function getAuthorizationProfiles() {
   return new Promise((resolve, reject) => {
-    fetch('https://ise.acme.com/api/v1/policy/network-access/authorization-profiles', {
+    fetch(`https://${fqdn}/api/v1/policy/network-access/authorization-profiles`, {
       method: 'GET',
       headers: {
         Authorization:
@@ -214,7 +215,7 @@ function getAuthorizationProfiles() {
 
 function getShellProfiles() {
   return new Promise((resolve, reject) => {
-    fetch('https://ise.acme.com/api/v1/policy/device-admin/shell-profiles', {
+    fetch(`https://${fqdn}/api/v1/policy/device-admin/shell-profiles`, {
       method: 'GET',
       headers: {
         Authorization:
@@ -237,7 +238,7 @@ function getShellProfiles() {
 
 function getCommandSets() {
   return new Promise((resolve, reject) => {
-    fetch('https://ise.acme.com/api/v1/policy/device-admin/command-sets', {
+    fetch(`https://${fqdn}/api/v1/policy/device-admin/command-sets`, {
       method: 'GET',
       headers: {
         Authorization:

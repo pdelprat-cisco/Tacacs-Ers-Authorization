@@ -1,4 +1,7 @@
 {
-  "user": "admin",
-  "password": "xxxx"
+    "ise": {
+      "user": "admin",
+      "password": "xxxx",
+      "fqdn": "ise.acme.com"
+    }
 }
